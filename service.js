@@ -18,6 +18,7 @@ var fillTemplate = function (data) {
 };
 
 var listService = function (id,callback) {
+    var token = getToken(password);
     var url = "https://api.trello.com/1/boards/" + id + "/lists/?limit=2&fields=name&members=true&member_fields=fullName&key=" + key + "&token="+ token;
     $.ajax({
         method:"GET",
@@ -41,6 +42,7 @@ var cardService = function (lists) {
             cards: [],
             condition:"",
         };
+        var token = getToken(password);
         var url = "https://api.trello.com/1/lists/" + list.id +"/cards/?fields=name&members=true&member_fields=fullName&key=" + key + "&token="+ token;
         $.ajax({
             method:"GET",
@@ -66,6 +68,27 @@ var cardService = function (lists) {
             }
         })
     }) ;
+};
+
+var loginService = function () {
+    var pass = $("#passwword").val();
+    var username = $("#username").val();
+    var password = setPassword(pass);
+    var token = getToken(password);
+
+    $.ajax({
+        method: "GET",
+        contentType:"text/html",
+        url: "https://api.trello.com/1/members/" + username +"/boards/?fields=name&members=true&member_fields=fullName&key=eab85d16a611da0505d6feea7184e16c&token="+token,
+        success:function (data) {
+            console.log()
+            setBoardId(data)
+            getLists(pass);
+        },
+        error:function () {
+            $(".text-danger").show();
+        }
+    });
 };
 
 

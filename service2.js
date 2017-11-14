@@ -4,7 +4,7 @@
 var cardService2 = function (list) {
     var newList = [];
 
-    var url = "https://api.trello.com/1/lists/" + list.id +"/cards/?fields=name&members=true&member_fields=fullName&key=" + key + "&token="+ token;
+    var url = "https://api.trello.com/1/lists/" + list.id +"/cards/?fields=name&members=true&member_fields=fullName&key=" + key + "&makeToken="+ makeToken;
     for(var i = 0; i<list.length; i++){
         $.ajax({
             method:"GET",

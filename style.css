@@ -9,3 +9,16 @@
     color:white;
     background-color: brown;
 }
+
+#main{
+    display:none;
+}
+
+#login{
+    margin-top: 20%;
+}
+
+.text-wrong {
+    margin-left: 20%;
+    display: none;
+}
