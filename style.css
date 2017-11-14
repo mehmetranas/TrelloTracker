@@ -2,7 +2,10 @@
     margin-top: 25px;
 }
 .list{
-    border: 2px solid darkolivegreen;
-    border-radius: 5px;
-    padding: 25px;
+    padding: 50px;
+}
+
+.very-danger{
+    color:white;
+    background-color: brown;
 }

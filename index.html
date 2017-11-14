@@ -10,14 +10,12 @@
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
         <div class="row">
-            <div class="col-md-6 list">
+            <div class="col-md-6 col-md-offset-3 list">
 
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 
@@ -26,20 +24,32 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="underscore.min.js"></script>
-<script src="service.js"></script>
 <script src="app.js"></script>
+<script src="service.js"></script>
+<script src="service2.js"></script>
 <script type="text/x-template" id="template">
+
+
     <%_.each(data,function(list){%>
-    <h4 id="category" class="label label-primary"><%=list.listName%></h4>
+
+    <table class="table table-bordered">
+        <tr class="active">
+            <th><%=list.category%></th>
+            <th><%=list.categoryLimit%></th>
+        </tr>
     <%_.each(list.cards,function(card){%>
-    <div class="detail">
-        <span id="title"><%=card.name%></span>
-        <span id="value"><%=card.value%></span>
-    </div>
+        <tr>
+            <td><%=card.title%></td>
+            <td><%=card.value%></td>
+        </tr>
+    <%});%>
+        <tr class=<%=list.condition%>>
+        <th>Toplam</th>
+        <th><%=list.total%></th>
+        </tr>
+    </table>
     <hr>
     <%});%>
-    <%});%>
-
 </script>
 </body>
 </html>
