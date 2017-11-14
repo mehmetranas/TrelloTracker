@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-<div class="container" id="login">
+<div class="container activeSection" id="login">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <form class="form-horizontal">
@@ -36,7 +36,15 @@
         </div>
     </div>
 </div>
+<div class="container" id="boards">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 boards">
+
+        </div>
+    </div>
+</div>
 <div class="container" id="main">
+    <button class="btn btn-info" id="back-btn">Geri</button>
         <div class="row">
             <div class="col-md-6 col-md-offset-3 list">
 
@@ -45,19 +53,15 @@
         </div>
 </div>
 
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="underscore.min.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/service.js"></script>
 <script type="text/x-template" id="template">
-
-
+    <h4><%=data[0].boardName%></h4>
+    <hr>
     <%_.each(data,function(list){%>
-
     <table class="table table-bordered">
         <tr class="active">
             <th><%=list.category%></th>
@@ -72,6 +76,13 @@
     <%});%>
     </table>
     <hr>
+    <%});%>
+</script>
+<script type="text/x-template" id="boards-template">
+    <%_.each(boards, function(board){%>
+   <div class="board-btn">
+       <button class="btn btn-info"  onclick = "selectBoard(event)" id=<%=board.id%>><%=board.name%></button>
+   </div>
     <%});%>
 </script>
 </body>

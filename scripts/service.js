@@ -1,4 +1,4 @@
-var fillTemplate = function (data) {
+var fillListTemplate = function (data) {
     data.forEach(function (list) {
         var value = 0;
         list.cards.forEach(function (card) {
@@ -16,6 +16,12 @@ var fillTemplate = function (data) {
     var result = _.template(content)({data:data});
     $(".list").html(result);
 };
+
+var fillBoardsTemplate = function (data) {
+    var content = $("#boards-template").html();
+    var result =_.template(content)({boards:data})
+    $(".boards").html(result);
+}
 
 var listService = function (id,callback) {
     var token = getToken(password);
@@ -36,6 +42,7 @@ var cardService = function (lists) {
 
     lists.forEach(function (list) {
         var cardsLocal = {
+            boardName:boardName,
             category: list.name.split("Max:")[0],
             categoryLimit: list.name.split("Max:")[1],
             total:0,
@@ -60,7 +67,7 @@ var cardService = function (lists) {
                 newLists.push(cardsLocal)
                 ajaxRemainder--;
                 if(ajaxRemainder == 0) {
-                    fillTemplate(newLists)
+                    fillListTemplate(newLists)
                 }
             },
             error: function () {
@@ -70,10 +77,17 @@ var cardService = function (lists) {
     }) ;
 };
 
-var loginService = function () {
-    var pass = $("#passwword").val();
-    var username = $("#username").val();
-    var password = setPassword(pass);
+var loginService = function (p,u) {
+    var pass, user;
+    if(p && u){
+        pass = p;
+        user = u;
+    }else{
+        pass = setPassword($("#passwword").val());
+        user = $("#username").val();
+    }
+
+    username = user;
     var token = getToken(password);
 
     $.ajax({
@@ -81,11 +95,7 @@ var loginService = function () {
         contentType:"text/html",
         url: "https://api.trello.com/1/members/" + username +"/boards/?fields=name&members=true&member_fields=fullName&key=eab85d16a611da0505d6feea7184e16c&token="+token,
         success:function (data) {
-            console.log()
-            setBoardId(data)
-            getLists(pass);
-            alarmService();
-
+            getBoards(data);
         },
         error:function () {
             $(".text-danger").show();
@@ -96,10 +106,15 @@ var loginService = function () {
 var alarmService = function () {
     setInterval(function () {
         $("th.very-danger").animateCss("pulse");
-    },2000);
+    },1500);
     setInterval(function () {
         $("th.little-danger").animateCss("pulse");
-    },4000)
+    },3000)
 }
 
-
+var selectBoard = function (e) {
+    var id = $(e.target).attr("id");
+    boardName = $(e.target).text();
+    console.log(boardName)
+    getLists(id);
+};
