@@ -5,9 +5,12 @@
     padding: 50px;
 }
 
-.very-danger{
-    color:white;
-    background-color: brown;
+span.little-danger{
+    color:lightcoral;
+}
+
+span.very-danger{
+    color:brown;
 }
 
 #main{

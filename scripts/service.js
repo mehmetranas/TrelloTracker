@@ -6,7 +6,7 @@ var fillTemplate = function (data) {
         });
         list.total = value;
         if(value >= parseInt(list.categoryLimit)*(0.8) && value < parseInt(list.categoryLimit)){
-            list.condition = "danger";
+            list.condition = "little-danger";
         }else if (value >= parseInt(list.categoryLimit)){
             list.condition = "very-danger";
         }
@@ -84,11 +84,22 @@ var loginService = function () {
             console.log()
             setBoardId(data)
             getLists(pass);
+            alarmService();
+
         },
         error:function () {
             $(".text-danger").show();
         }
     });
 };
+
+var alarmService = function () {
+    setInterval(function () {
+        $("th.very-danger").animateCss("pulse");
+    },2000);
+    setInterval(function () {
+        $("th.little-danger").animateCss("pulse");
+    },4000)
+}
 
 
