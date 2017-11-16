@@ -2,7 +2,7 @@ var fillListTemplate = function (data) {
     data.forEach(function (list) {
         var value = 0;
         list.cards.forEach(function (card) {
-            value += parseInt(card.value);
+            value += parseFloat(card.value);
         });
         list.total = value;
         if(value >= parseInt(list.categoryLimit)*(0.8) && value < parseInt(list.categoryLimit)){
@@ -57,11 +57,9 @@ var cardService = function (lists) {
             success:function (cards) {
                 for(var j = 0; j<cards.length; j++) {
                     var card = cards[j];
+                    var cardPush = getValue(card.name);
+                    // console.log(cardPush)
 
-                    var cardPush = {
-                        title: card.name.split(" ")[0],
-                        value: card.name.split(" ")[1]
-                    };
                     cardsLocal.cards.push(cardPush);
                 };
                 newLists.push(cardsLocal)
@@ -110,11 +108,33 @@ var alarmService = function () {
     setInterval(function () {
         $("th.little-danger").animateCss("pulse");
     },3000)
-}
+};
 
 var selectBoard = function (e) {
     var id = $(e.target).attr("id");
     boardName = $(e.target).text();
-    console.log(boardName)
+    console.log(boardName);
     getLists(id);
+};
+
+getValue = function (data) {
+    var value;
+    var title = "";
+    var arr = data.trim().split(" ");
+
+    arr.forEach(function (item) {
+
+        if(parseFloat(item) >= 0){
+            value = parseFloat(item);
+            var index = arr.indexOf(item);
+            arr.splice(index,1);
+            title = arr.join(" ").trim();
+        }
+    });
+
+    if(title.length == 0) title = "Diğer";
+    return {
+        title:title,
+        value:value
+    }
 };
