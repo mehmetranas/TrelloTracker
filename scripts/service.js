@@ -137,7 +137,7 @@ getValue = function (data) {
         }
     });
 
-    if(title.length == 0) title = "Diğer";
+    if(title.length == 0) title = "-";
     return {
         title:title,
         value:value
