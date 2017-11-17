@@ -61,6 +61,18 @@
 <script type="text/x-template" id="template">
     <h4><%=data[0].boardName%></h4>
     <hr>
+    <table class="table table-bordered">
+        <tr class="success">
+            <th>Genel Toplam</th>
+            <th class="<%=data.quantityCondition%>">
+                <span class="<%=data.quantityCondition%>"><%=data.quantityHave
+                %>&nbsp;</span>/&nbsp;<%=data.quantityShould%>
+            <span class="text-muted">
+                &nbsp;(%<%=Math.floor((data.quantityHave/data.quantityShould)*100)%>)
+            </span></th>
+        </tr>
+    </table>
+    <hr>
     <%_.each(data,function(list){%>
     <table class="table table-bordered">
         <tr class="active">

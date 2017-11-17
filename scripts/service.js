@@ -1,16 +1,26 @@
 var fillListTemplate = function (data) {
-    data.forEach(function (list) {
+        var quantityShould= 0,
+            quantityHave= 0,
+            quantityCondition = "text-muted";
+       data.forEach(function (list) {
         var value = 0;
         list.cards.forEach(function (card) {
             value += parseFloat(card.value);
         });
         list.total = value;
-        if(value >= parseInt(list.categoryLimit)*(0.8) && value < parseInt(list.categoryLimit)){
+        if(value >= parseFloat(list.categoryLimit)*(0.8) && value < parseFloat(list.categoryLimit)){
             list.condition = "little-danger";
-        }else if (value >= parseInt(list.categoryLimit)){
+        }else if (value >= parseFloat(list.categoryLimit)){
             list.condition = "very-danger";
         }
+        quantityShould += parseFloat(list.categoryLimit.trim());
+        quantityHave += list.total;
     });
+       if(quantityHave >= quantityShould*0.8 && quantityHave < quantityShould) quantityCondition = "little-danger";
+       else if(quantityHave >= quantityShould) quantityCondition = "very-danger";
+       data.quantityShould = quantityShould;
+       data.quantityHave = quantityHave;
+       data.quantityCondition = quantityCondition;
 
     var content = $("#template").html();
     var result = _.template(content)({data:data});
@@ -41,7 +51,7 @@ var cardService = function (lists) {
     var ajaxRemainder = lists.length;
 
     lists.forEach(function (list) {
-        var cardsLocal = {
+        var listLocal = {
             boardName:boardName,
             category: list.name.split("Max:")[0],
             categoryLimit: list.name.split("Max:")[1],
@@ -58,11 +68,9 @@ var cardService = function (lists) {
                 for(var j = 0; j<cards.length; j++) {
                     var card = cards[j];
                     var cardPush = getValue(card.name);
-                    // console.log(cardPush)
-
-                    cardsLocal.cards.push(cardPush);
+                    listLocal.cards.push(cardPush);
                 };
-                newLists.push(cardsLocal)
+                newLists.push(listLocal);
                 ajaxRemainder--;
                 if(ajaxRemainder == 0) {
                     fillListTemplate(newLists)
