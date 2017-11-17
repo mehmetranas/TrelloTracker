@@ -62,13 +62,13 @@
     <h4><%=data[0].boardName%></h4>
     <hr>
     <table class="table table-bordered">
-        <tr class="success">
-            <th>Genel Toplam</th>
+        <tr class="active">
+            <th>Toplam</th>
             <th class="<%=data.quantityCondition%>">
                 <span class="<%=data.quantityCondition%>"><%=data.quantityHave
                 %>&nbsp;</span>/&nbsp;<%=data.quantityShould%>
             <span class="text-muted">
-                &nbsp;(%<%=Math.floor((data.quantityHave/data.quantityShould)*100)%>)
+                &nbsp;(%<%= data.quantityShould != 0 ? Math.floor((data.quantityHave/data.quantityShould)*100):""%>)
             </span></th>
         </tr>
     </table>

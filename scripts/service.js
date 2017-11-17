@@ -1,8 +1,8 @@
 var fillListTemplate = function (data) {
-        var quantityShould= 0,
-            quantityHave= 0,
-            quantityCondition = "text-muted";
-       data.forEach(function (list) {
+    data.quantityCondition = "text-muted";
+    data.quantityShould = 0;
+    data.quantityHave = 0;
+        data.forEach(function (list) {
         var value = 0;
         list.cards.forEach(function (card) {
             value += parseFloat(card.value);
@@ -13,14 +13,11 @@ var fillListTemplate = function (data) {
         }else if (value >= parseFloat(list.categoryLimit)){
             list.condition = "very-danger";
         }
-        quantityShould += parseFloat(list.categoryLimit.trim());
-        quantityHave += list.total;
+        data.quantityShould += parseFloat(list.categoryLimit.trim());
+        data.quantityHave += list.total;
     });
-       if(quantityHave >= quantityShould*0.8 && quantityHave < quantityShould) quantityCondition = "little-danger";
-       else if(quantityHave >= quantityShould) quantityCondition = "very-danger";
-       data.quantityShould = quantityShould;
-       data.quantityHave = quantityHave;
-       data.quantityCondition = quantityCondition;
+       if(data.quantityHave >= data.quantityShould*0.8 && data.quantityHave < data.quantityShould) data.quantityCondition = "little-danger";
+       else if(data.quantityHave >= data.quantityShould) data.quantityCondition = "very-danger";
 
     var content = $("#template").html();
     var result = _.template(content)({data:data});
@@ -53,8 +50,8 @@ var cardService = function (lists) {
     lists.forEach(function (list) {
         var listLocal = {
             boardName:boardName,
-            category: list.name.split("Max:")[0],
-            categoryLimit: list.name.split("Max:")[1],
+            category: list.name.split("Max:")[0]?list.name.split("Max:")[0]:"?",
+            categoryLimit: list.name.split("Max:")[1]?list.name.split("Max:")[1]:"0",
             total:0,
             cards: [],
             condition:"",
