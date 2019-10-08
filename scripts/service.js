@@ -96,7 +96,7 @@ var loginService = function (p,u) {
     $.ajax({
         method: "GET",
         contentType:"text/html",
-        url: "https://api.trello.com/1/members/" + username +"/boards/?fields=name&members=true&member_fields=fullName&key=eab85d16a611da0505d6feea7184e16c&token="+token,
+        url: "https://api.trello.com/1/members/" + username +"/boards?fields=name&key=eab85d16a611da0505d6feea7184e16c&token="+token,
         success:function (data) {
             getBoards(data);
         },
