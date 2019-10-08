@@ -3,7 +3,7 @@ var key ="eab85d16a611da0505d6feea7184e16c",
     username,
     boardName;
 
-$.fn.extend({n
+$.fn.extend({
     animateCss: function (animationName, callback) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         this.addClass('animated ' + animationName).one(animationEnd, function() {
